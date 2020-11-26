@@ -9,7 +9,7 @@ window.resizable(0, 0)      # Prevents player from resizing the window
 
 
 # Initiated a canvas as it is easier to do animation on a canvas
-canvas = Canvas(window, width=700, height=700)
+canvas = Canvas(window, width=700, height=700, bd=0, highlightthickness=0)
 canvas.pack()
 window.update()
 
@@ -36,7 +36,7 @@ class Ball:
         # position[1] and [3] are the y coordinate of the ball; if the ball reaches the top it starts to come back down and if it reaches the bottom it comes back up
         if position[1] <= 1:
             self.y = 1
-        if position[3] > 688:   # 688 as it looked better
+        if position[3] > 700:   # Removed border so now I can use the actual window height
             self.y = -1
 
 
