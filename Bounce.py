@@ -47,9 +47,13 @@ class Ball:
 
 ball = Ball(canvas)
 
+canvas.create_rectangle(300, 650, 430, 680, fill='#264653')
+
+# window.bind('<left>', move_left)
+# window.bind('<right>', move_right)
 
 # Initiating a while loop so thw window keeps updating and sleep is there so animations are smooth
 while True:
     ball.action()
     window.update()
-    time.sleep(0.0000001)  # Allow for the animation to take place otherwise it would go very quick
+    time.sleep(0.001)  # Allow for the animation to take place otherwise it would go very quick
