@@ -16,16 +16,28 @@ window.update()
 
 # Defining class ball which will contain all the functions with the ball
 class Ball:
-    # Init is run everytime we reference Ball and pass in attributes
     def __init__(self, canvas):
+        # So that these can be changed later
+        self.x = 0
+        self.y = -1
         self.canvas = canvas
+
         # Creating the ball
         self.identity = self.canvas.create_oval(10, 10, 25, 25, fill="red")
         self.canvas.move(self.identity, 350, 150)   # Moving the ball to the center of the screen
 
     # Defining a function to move the ball down
-    def draw(self):
-        self.canvas.move(self.identity, 0, 1)
+    def action(self):
+        self.canvas.move(self.identity, self.x, self.y)
+
+        # Keeps track of the current position of the ball and stores in the variable position so we can create an if loop
+        position = self.canvas.coords(self.identity)
+
+        # position[1] and [3] are the y coordinate of the ball; if the ball reaches the top it starts to come back down and if it reaches the bottom it comes back up
+        if position[1] <= 1:
+            self.y = 1
+        if position[3] > 688:   # 688 as it looked better
+            self.y = -1
 
 
 ball = Ball(canvas)
@@ -33,6 +45,6 @@ ball = Ball(canvas)
 
 # Initiating a while loop so thw window keeps updating and sleep is there so animations are smooth
 while True:
-    ball.draw()
+    ball.action()
     window.update()
-    time.sleep(0.1)  # Allow for the animation to take place otherwise it would go very quick
+    time.sleep(0.0000001)  # Allow for the animation to take place otherwise it would go very quick
