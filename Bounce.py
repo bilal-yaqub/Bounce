@@ -9,4 +9,13 @@ window.title("Bounce")
 canvas = Canvas(window, width=700, height=700).pack()
 
 
+class Ball:
+    # Init is run everytime we reference Ball and pass in attributes
+    def __init__(self, canvas):
+        self.canvas = canvas
+        # Creating the ball
+        self.identity = canvas.create_oval(15, 15, 25, 25, fill="red")
+        self.canvas.move(self.identity, 350, 150)   # Moving the ball to the center
+
+
 window.mainloop()
