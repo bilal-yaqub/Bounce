@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import random
 import time
 
@@ -9,7 +10,7 @@ window.resizable(0, 0)      # Prevents player from resizing the window
 
 
 # Initiated a canvas as it is easier to do animation on a canvas
-canvas = Canvas(window, width=700, height=700, bd=0, highlightthickness=0)
+canvas = Canvas(window, width=700, height=700, bd=0, highlightthickness=0, bg="#264653")
 canvas.pack()
 window.update()
 
@@ -21,9 +22,10 @@ class Ball:
         self.x = random.randint(-5, 5)  # Makes the game more unpredictable
         self.y = -3
         self.canvas = canvas
+        self.game_still_going = True
 
         # Creating the ball
-        self.identity = self.canvas.create_oval(10, 10, 25, 25, fill="red")
+        self.identity = self.canvas.create_oval(10, 10, 25, 25, fill="#e76f51")
         self.canvas.move(self.identity, 350, 150)   # Moving the ball to the center of the screen
 
     # Defining a function to move the ball down
@@ -36,6 +38,8 @@ class Ball:
         # position[1] and [3] are the y coordinate of the ball; if the ball reaches the top it starts to come back down and if it reaches the bottom it comes back up
         if position[1] <= 1 or position[3] > 700:
             self.y = -self.y
+        if position[3] >= 700:
+            self.game_still_going = False
         # Checking the ball is hitting the paddle and  if it does the ball moves in the other direction
         if position[2] >= rectangle.position[0] and position[0] <= rectangle.position[2]:
             if position[3] >= rectangle.position[1] and position[3] <= rectangle.position[3]:
@@ -50,7 +54,7 @@ class Ball:
 class Rectangle:
     def __init__(self, canvas):
         self.canvas = canvas
-        self.identity = self.canvas.create_rectangle(0, 0, 130, 30, fill='#264653')
+        self.identity = self.canvas.create_rectangle(0, 0, 130, 30, fill='#ddbea9')
         self.canvas.move(self.identity, 300, 650)
         self.x = 0  # We don't need the y value here
         # Making position an attribute so it can be accessed inside the ball class
@@ -79,7 +83,17 @@ rectangle = Rectangle(canvas)
 
 # Initiating a while loop so thw window keeps updating and sleep is there so animations are smooth
 while True:
-    ball.action()
-    rectangle.decision()
-    window.update()
-    time.sleep(0.01)  # Allow for the animation to take place otherwise it would go very quick
+    if ball.game_still_going:
+        ball.action()
+        rectangle.decision()
+        window.update()
+        time.sleep(0.01)  # Allow for the animation to take place otherwise it would go very quick
+    else:
+        # incase they enter lowercase
+        answer = messagebox.askquestion("Take the L", "Do you want to keep playing?")
+        if answer == "yes":
+            ball.game_still_going = True
+            continue
+        else:
+            print("Thanks for playing")
+            break
