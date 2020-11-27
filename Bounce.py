@@ -38,7 +38,7 @@ class Ball:
         # position[1] and [3] are the y coordinate of the ball; if the ball reaches the top it starts to come back down and if it reaches the bottom it comes back up
         if position[1] <= 1 or position[3] > 700:
             self.y = -self.y
-        if position[3] >= 700:
+        if position[3] > 700:
             self.game_still_going = False
         # Checking the ball is hitting the paddle and  if it does the ball moves in the other direction
         if position[2] >= rectangle.position[0] and position[0] <= rectangle.position[2]:
