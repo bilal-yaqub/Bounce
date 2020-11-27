@@ -36,6 +36,11 @@ class Ball:
         # position[1] and [3] are the y coordinate of the ball; if the ball reaches the top it starts to come back down and if it reaches the bottom it comes back up
         if position[1] <= 1 or position[3] > 700:
             self.y = -self.y
+        # Checking the ball is hitting the paddle and  if it does the ball moves in the other direction
+        if position[2] >= rectangle.position[0] and position[0] <= rectangle.position[2]:
+            if position[3] >= rectangle.position[1] and position[3] <= rectangle.position[3]:
+                self.y = -self.y
+
         # position [0] & [2] are x coordinates; creating a while loop to prevent the ball from going out of the screen
         if position[0] <= 0 or position[2] > 700:
             self.x = -self.x
@@ -48,6 +53,8 @@ class Rectangle:
         self.identity = self.canvas.create_rectangle(0, 0, 130, 30, fill='#264653')
         self.canvas.move(self.identity, 300, 650)
         self.x = 0  # We don't need the y value here
+        # Making position an attribute so it can be accessed inside the ball class
+        self.position = (0, 0, 0, 0)
 
     # When the user presses the left key the rectangles moves left as well
     def move_left(self, event):
@@ -61,9 +68,9 @@ class Rectangle:
         # These are th key bindings
         window.bind('<Left>', self.move_left)
         window.bind('<Right>', self.move_right)
-        position = self.canvas.coords(self.identity)
         self.canvas.move(self.identity, self.x, 0)
-        if position[0] <= 5 or position[2] >= 695:
+        self.position = self.canvas.coords(self.identity)
+        if self.position[0] <= 5 or self.position[2] >= 695:
             self.x = 0  # Stops the paddle from moving out of the screen
 
 
