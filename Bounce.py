@@ -90,10 +90,10 @@ while True:
         time.sleep(0.01)  # Allow for the animation to take place otherwise it would go very quick
     else:
         # incase they enter lowercase
-        answer = messagebox.askquestion("Take the L", "Do you want to keep playing?")
+        answer = messagebox.askquestion("You Lost", "Do you want to keep playing?")
         if answer == "yes":
             ball.game_still_going = True
             continue
         else:
-            print("Thanks for playing")
+            messagebox.showinfo("Game Quit", "Thanks For Playing")
             break
